@@ -1,0 +1,113 @@
+﻿@page
+@model DeanHLibrarySite.Pages.Books.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Films Listing</h1>
+
+<p>
+    <a asp-page="Create">Create New Film Entry</a>
+</p>
+
+<form>
+    <p>
+        Type of Media : 
+        <select asp-for="SelectedBookTypesTest" asp-items="Model.BookTypes">
+            <option value="">All</option>
+        </select>        <br />
+        Genre :
+        <select asp-for="Genre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+        <br />
+        Title: <input type="text" asp-for="Title" />
+        <br />
+        Author: <input type="text" asp-for="Author" />
+        <br />
+        Publication Year: <input type="date" id="publicationYear" asp-for="PublicationYear" /> 
+        <br />
+
+        <input type="submit" value="Filter" />
+    </p>
+    <br />
+
+    <input type="hidden" asp-for="Title" />
+    <input type="hidden" asp-for="Author" />
+    <input type="hidden" asp-for="Genre" /> 
+    <input type="hidden" asp-for="PublicationYear" /> 
+</form>
+
+<div id="pageNumberDisplay">
+    <span>
+        @if (Model.PageNumber > 1)
+        {
+            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear})" class="button-link">Previous</a>
+        }
+        @if (Model.AmountOfPages != 0)
+        {
+            <text>Page: <span>@Model.PageNumber</span> / @Model.AmountOfPages</text>
+        }
+        @if (Model.PageNumber < Model.AmountOfPages)
+        {
+            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear})" class="button-link">Next</a>
+        }
+    </span>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].PublicationYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.BookTable) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublicationYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
