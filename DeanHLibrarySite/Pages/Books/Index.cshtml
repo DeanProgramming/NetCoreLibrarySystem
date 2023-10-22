@@ -14,9 +14,10 @@
 <form>
     <p>
         Type of Media : 
-        <select asp-for="SelectedBookTypesTest" asp-items="Model.BookTypes">
+        <select asp-for="SelectedBookTypes" asp-items="Model.BookTypes">
             <option value="">All</option>
-        </select>        <br />
+        </select>        
+        <br />
         Genre :
         <select asp-for="Genre" asp-items="Model.Genres">
             <option value="">All</option>
@@ -37,13 +38,14 @@
     <input type="hidden" asp-for="Author" />
     <input type="hidden" asp-for="Genre" /> 
     <input type="hidden" asp-for="PublicationYear" /> 
+    <input type="hidden" asp-for="SelectedBookTypes" /> 
 </form>
 
 <div id="pageNumberDisplay">
     <span>
         @if (Model.PageNumber > 1)
         {
-            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear})" class="button-link">Previous</a>
+            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Previous</a>
         }
         @if (Model.AmountOfPages != 0)
         {
@@ -51,7 +53,7 @@
         }
         @if (Model.PageNumber < Model.AmountOfPages)
         {
-            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear})" class="button-link">Next</a>
+            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Next</a>
         }
     </span>
 </div>

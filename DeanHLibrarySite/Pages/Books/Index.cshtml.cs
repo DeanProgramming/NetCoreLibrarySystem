@@ -23,7 +23,7 @@ namespace DeanHLibrarySite.Pages.Books
 
         public IList<BookTable> BookTable { get;set; } = default!;
 
-        public async Task OnGetAsync(int? pageNumber, string? title, string? author, string? genre, DateTime? publicationYear)
+        public async Task OnGetAsync(int? pageNumber, string? title, string? author, string? genre, DateTime? publicationYear, BookTable.BookType? bookType)
         {
             // Use LINQ to get list of genres.
             IQueryable<string> genreQuery = from m in _context.BookTable
@@ -41,8 +41,16 @@ namespace DeanHLibrarySite.Pages.Books
             Title = title;
             Author = author;
             Genre = genre;
+            
+            
             PublicationYear = publicationYear;
-            //SelectedBookType = bookType;
+
+            if (bookType != null)
+            {
+                SelectedBookTypes = bookType;
+            }
+
+            //SelectedBookTypes = bookType;
 
             // Preserve filter values in the query string
             var queryString = new StringBuilder("?");
@@ -67,12 +75,17 @@ namespace DeanHLibrarySite.Pages.Books
                 queryString.Append($"PublicationYear={PublicationYear}&");
             }
 
+            if (SelectedBookTypes != null)
+            {
+                queryString.Append($"SelectedBookTypes={SelectedBookTypes}&");
+            }
+
             // Remove trailing '&' character
             queryString.Length--;
 
             // Generate URLs with query string parameters
-            PreviousPageUrl = Url.Page("./Index", new { pageNumber = pageNumber - 1, title, author, genre, publicationYear }) + queryString.ToString();
-            NextPageUrl = Url.Page("./Index", new { pageNumber = pageNumber + 1, title, author, genre, publicationYear }) + queryString.ToString();
+            PreviousPageUrl = Url.Page("./Index", new { pageNumber = pageNumber - 1, title, author, genre, publicationYear, bookType = SelectedBookTypes }) + queryString.ToString();
+            NextPageUrl = Url.Page("./Index", new { pageNumber = pageNumber + 1, title, author, genre, publicationYear, bookType = SelectedBookTypes }) + queryString.ToString();
 
 
             if (!string.IsNullOrEmpty(Title))
@@ -95,9 +108,9 @@ namespace DeanHLibrarySite.Pages.Books
                 bookList = bookList.Where(x => x.PublicationYear >= PublicationYear);
             }
 
-            if (SelectedBookTypesTest != null)
+            if (SelectedBookTypes != null)
             {
-                bookList = bookList.Where(x => x.Type == SelectedBookTypesTest);
+                bookList = bookList.Where(x => x.Type == SelectedBookTypes);
             }
 
             int pageSize = 5;
@@ -120,7 +133,7 @@ namespace DeanHLibrarySite.Pages.Books
 
         public SelectList? BookTypes { get; set; }
         [BindProperty(SupportsGet = true)]
-        public Models.BookTable.BookType? SelectedBookTypesTest { get; set; } 
+        public Models.BookTable.BookType? SelectedBookTypes { get; set; } 
 
         [BindProperty(SupportsGet = true)]
         public string? Author { get; set; }
