@@ -36,6 +36,17 @@ namespace DeanHLibrarySite.Pages.Books
                 return NotFound();
             }
             BookTable = booktable;
+
+
+            AvailableBookTypes = Enum.GetValues(typeof(BookTable.BookType))
+                .Cast<BookTable.BookType>()
+                .Select(bookType => new SelectListItem
+                {
+                    Value = bookType.ToString(),
+                    Text = bookType.ToString()
+                })
+                .ToList();
+
             return Page();
         }
 
@@ -73,5 +84,7 @@ namespace DeanHLibrarySite.Pages.Books
         {
           return (_context.BookTable?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        public List<SelectListItem> AvailableBookTypes { get; set; }
     }
 }

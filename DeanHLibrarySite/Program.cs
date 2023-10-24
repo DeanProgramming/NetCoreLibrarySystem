@@ -22,6 +22,8 @@ namespace DeanHLibrarySite
                 var services = scope.ServiceProvider;
 
                 SeedBookTable.Initialize(services);
+                SeedUserTable.Initialize(services);
+                SeedReservations.Initialize(services);
             }
 
             // Configure the HTTP request pipeline.

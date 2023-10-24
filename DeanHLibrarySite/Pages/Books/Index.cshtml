@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Films Listing</h1>
+<h1>Library Listing</h1>
 
 <p>
-    <a asp-page="Create">Create New Film Entry</a>
+    <a asp-page="Create">Create New Library Entry</a>
 </p>
 
 <form>
@@ -33,12 +33,6 @@
         <input type="submit" value="Filter" />
     </p>
     <br />
-
-    <input type="hidden" asp-for="Title" />
-    <input type="hidden" asp-for="Author" />
-    <input type="hidden" asp-for="Genre" /> 
-    <input type="hidden" asp-for="PublicationYear" /> 
-    <input type="hidden" asp-for="SelectedBookTypes" /> 
 </form>
 
 <div id="pageNumberDisplay">
@@ -80,6 +74,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.BookTable[0].Description)
             </th>
+            <th>
+                <p> 
+                    Is Available
+                </p>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -103,6 +102,28 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @if(Model != null && Model.BookAvailability != null)
+                {
+                    if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id])
+                    {
+                        <p>Is Available</p>
+                        Console.WriteLine($"ID: {item.Id}");
+                        Console.WriteLine($"Current Date: {DateTime.Today}"); 
+                    }
+                    else
+                    {
+                        @if (Model.BookReturnDateExpired.ContainsKey(item.Id) && Model.BookReturnDateExpired[item.Id])
+                        {
+                            <p> Should be returned. Contact library for further information</p>
+                        }
+                        else
+                        {
+                            <p>Return Date: @Model.BookReturnDates[item.Id]?.ToShortDateString()</p>
+                        }
+                    }
+                }
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

@@ -21,7 +21,8 @@ namespace DeanHLibrarySite.Pages.Books
             _context = context;
         }
 
-        public IList<BookTable> BookTable { get;set; } = default!;
+        public IList<BookTable> BookTable { get;set; } = default!; 
+
 
         public async Task OnGetAsync(int? pageNumber, string? title, string? author, string? genre, DateTime? publicationYear, BookTable.BookType? bookType)
         {
@@ -118,15 +119,41 @@ namespace DeanHLibrarySite.Pages.Books
 
             int itemsToSkip = ((pageNumber ?? 1) - 1) * pageSize;
 
+            
+            
             bookList = bookList.Skip(itemsToSkip).Take(pageSize);
+
 
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync()); 
             BookTypes = new SelectList(await bookTypeQuery.Distinct().ToListAsync());
             BookTable = await bookList.ToListAsync();
+
+            var bookIds = BookTable.Select(b => b.Id).ToList();
+            var bookedBooks = _context.BookReservations
+                .Where(br => bookIds.Contains(br.BookID) && br.Booked)
+                .ToList();
+
+            // Initialize the BookAvailability, BookReturnDates, and BookReturnDateExpired dictionaries
+            BookAvailability = new Dictionary<int, bool>();
+            BookReturnDates = new Dictionary<int, DateTime?>();
+            BookReturnDateExpired = new Dictionary<int, bool>();
+            foreach (var book in BookTable)
+            {
+                var isBooked = bookedBooks.Any(br => br.BookID == book.Id);
+                BookAvailability[book.Id] = !isBooked;
+                if (isBooked)
+                {
+                    var returnDate = bookedBooks.FirstOrDefault(br => br.BookID == book.Id)?.ReturnDate;
+                    BookReturnDates[book.Id] = returnDate;
+                    BookReturnDateExpired[book.Id] = returnDate < DateTime.Today;
+                }
+            }
         }
 
 
-
+        public Dictionary<int, bool> BookAvailability { get; set; }
+        public Dictionary<int, DateTime?> BookReturnDates { get; set; }
+        public Dictionary<int, bool> BookReturnDateExpired { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? Title { get; set; }

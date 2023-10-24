@@ -4,6 +4,7 @@ using DeanHLibrarySite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeanHLibrarySite.Migrations
 {
     [DbContext(typeof(DeanHLibrarySiteContext))]
-    partial class DeanHLibrarySiteContextModelSnapshot : ModelSnapshot
+    [Migration("20231022225847_UserDatabaseValidation")]
+    partial class UserDatabaseValidation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace DeanHLibrarySite.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("DeanHLibrarySite.Models.BookReservations", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Booked")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ReturnDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BookReservations");
-                });
 
             modelBuilder.Entity("DeanHLibrarySite.Models.BookTable", b =>
                 {
@@ -98,9 +76,6 @@ namespace DeanHLibrarySite.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.Property<bool>("HasAdministrator")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -15,5 +15,7 @@ namespace DeanHLibrarySite.Data
         }
 
         public DbSet<DeanHLibrarySite.Models.BookTable> BookTable { get; set; } = default!;
+        public DbSet<DeanHLibrarySite.Models.UserTable> UserTable { get; set; } = default!;
+        public DbSet<DeanHLibrarySite.Models.BookReservations> BookReservations { get; set; } = default!;
     }
 }
