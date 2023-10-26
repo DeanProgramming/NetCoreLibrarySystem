@@ -1,0 +1,39 @@
+﻿@page
+@model DeanHLibrarySite.Pages.Books.CreateBookingModel
+
+@{
+    ViewData["Title"] = "Book This Item";
+}
+
+<h1>Create Booking</h1> 
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="ItemId" />
+            <input type="hidden" asp-for="Title" />
+            <input type="hidden" asp-for="PageNumber" />
+            <input type="hidden" asp-for="Author" />
+            <input type="hidden" asp-for="Genre" />
+            <input type="hidden" asp-for="PublicationYear" />
+            <input type="hidden" asp-for="SelectedBookTypes" /> 
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p>You are about to book out - </p>
+            <p>@Model.BookTitle</p>
+            <p>Confirm</p> 
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Page("./Index", new {id = Model.ItemId, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

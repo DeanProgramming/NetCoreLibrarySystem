@@ -106,7 +106,8 @@
                 {
                     if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id])
                     {
-                        <p>Is Available</p>
+                            <p>Is Available</p>
+                            <a href="@Url.Page("./CreateBooking", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Book</a>
                     }
                     else
                     {
