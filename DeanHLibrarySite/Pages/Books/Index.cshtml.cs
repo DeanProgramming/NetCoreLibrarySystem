@@ -9,6 +9,7 @@ using DeanHLibrarySite.Data;
 using DeanHLibrarySite.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DeanHLibrarySite.Pages.Books
 {
@@ -42,8 +43,6 @@ namespace DeanHLibrarySite.Pages.Books
             Title = title;
             Author = author;
             Genre = genre;
-            
-            
             PublicationYear = publicationYear;
 
             if (bookType != null)

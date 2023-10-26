@@ -75,9 +75,7 @@
                 @Html.DisplayNameFor(model => model.BookTable[0].Description)
             </th>
             <th>
-                <p> 
-                    Is Available
-                </p>
+                <p>Availability</p>
             </th>
             <th></th>
         </tr>
@@ -109,8 +107,6 @@
                     if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id])
                     {
                         <p>Is Available</p>
-                        Console.WriteLine($"ID: {item.Id}");
-                        Console.WriteLine($"Current Date: {DateTime.Today}"); 
                     }
                     else
                     {
@@ -126,8 +122,8 @@
                 }
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a href="@Url.Page("./Edit", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
+                <a href="@Url.Page("./Details", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Details</a>  
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

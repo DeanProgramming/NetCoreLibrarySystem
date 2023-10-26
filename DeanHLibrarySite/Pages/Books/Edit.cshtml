@@ -52,7 +52,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a href="@Url.Page("./Index", new {id = Model.ItemId, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Back to List</a>
 </div>
 
 @section Scripts {

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DeanHLibrarySite.Data;
 using DeanHLibrarySite.Models;
+using System.Text;
 
 namespace DeanHLibrarySite.Pages.Books
 {
@@ -23,7 +19,7 @@ namespace DeanHLibrarySite.Pages.Books
         [BindProperty]
         public BookTable BookTable { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, int? pageNumber, string? title, string? author, string? genre, DateTime? publicationYear, BookTable.BookType? bookType)
         {
             if (id == null || _context.BookTable == null)
             {
@@ -36,6 +32,18 @@ namespace DeanHLibrarySite.Pages.Books
                 return NotFound();
             }
             BookTable = booktable;
+
+            ItemId = id;
+            Title = title;
+            Author = author;
+            Genre = genre; 
+            PageNumber = pageNumber; 
+            PublicationYear = publicationYear;
+
+            if (bookType != null)
+            {
+                SelectedBookTypes = bookType;
+            }
 
 
             AvailableBookTypes = Enum.GetValues(typeof(BookTable.BookType))
@@ -51,7 +59,7 @@ namespace DeanHLibrarySite.Pages.Books
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
+        // For more details, see https://aka.ms/RazorPagesCRUD. 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -77,7 +85,43 @@ namespace DeanHLibrarySite.Pages.Books
                 }
             }
 
-            return RedirectToPage("./Index");
+            // Preserve filter values in the query string
+            var queryString = new StringBuilder("&");
+
+            if (!string.IsNullOrEmpty(Title))
+            {
+                queryString.Append($"title={Title}&");
+            }
+
+            if (!string.IsNullOrEmpty(Author))
+            {
+                queryString.Append($"author={Author}&");
+            }
+
+            if (!string.IsNullOrEmpty(Genre))
+            {
+                queryString.Append($"genre={Genre}&");
+            }
+
+            if (PublicationYear != null)
+            {
+                queryString.Append($"publicationYear={PublicationYear}&");
+            }
+
+            if (SelectedBookTypes != null)
+            {
+                queryString.Append($"bookType={SelectedBookTypes.ToString()}&");
+            }
+
+            // Remove the trailing '&' character
+            if (queryString.Length > 1)
+            {
+                queryString.Length--;
+            }
+
+            // Redirect back to the "Index" page with the preserved query parameters// Redirect back to the "Index" page with the preserved query parameters
+            var redirectUrl = Url.Page("./Index", new { pageNumber = PageNumber }) + queryString.ToString();
+            return Redirect(redirectUrl);
         }
 
         private bool BookTableExists(int id)
@@ -86,5 +130,20 @@ namespace DeanHLibrarySite.Pages.Books
         }
 
         public List<SelectListItem> AvailableBookTypes { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? ItemId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int? PageNumber { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string? Title { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string? Author { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string? Genre { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public DateTime? PublicationYear { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public Models.BookTable.BookType? SelectedBookTypes { get; set; }
     }
 }
