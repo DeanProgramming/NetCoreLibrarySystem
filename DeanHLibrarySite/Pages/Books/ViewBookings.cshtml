@@ -1,0 +1,83 @@
+﻿@page
+@model DeanHLibrarySite.Pages.Books.ViewBookingsModel
+@{
+}
+
+
+<h1>Your Current Bookings</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <p>Return Date</p>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].PublicationYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTable[0].Description)
+            </th>  
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Math.Max(Model.BookReservations.Count, Model.BookTable.Count); i++)
+        {
+            <tr>
+                @if (i < Model.BookReservations.Count)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookReservations[i].ReturnDate)
+                                               
+                        @if (Model.BookReturnDateExpired[i])
+                        {
+                            <p>Passed return date please return your book.</p>
+                        }
+                    </td>
+                }
+                else
+                {
+                    <td colspan="6"></td>
+                }
+
+                @if (i < Model.BookTable.Count)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookTable[i].Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookTable[i].Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookTable[i].Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookTable[i].Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookTable[i].PublicationYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.BookTable[i].Description)
+                    </td>
+                }
+                else
+                {
+                    <td colspan="6"></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

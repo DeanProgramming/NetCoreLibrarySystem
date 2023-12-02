@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using DeanHLibrarySite.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using DeanHLibrarySite.Pages;
 
 namespace DeanHLibrarySite.Data
 {
-    public class DeanHLibrarySiteContext : DbContext
+    public class DeanHLibrarySiteContext : IdentityDbContext<ApplicationUser>
     {
-        public DeanHLibrarySiteContext (DbContextOptions<DeanHLibrarySiteContext> options)
+        public DeanHLibrarySiteContext(DbContextOptions<DeanHLibrarySiteContext> options)
             : base(options)
         {
         }

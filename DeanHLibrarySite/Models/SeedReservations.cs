@@ -28,21 +28,21 @@ namespace DeanHLibrarySite.Models
                 new BookReservations
                 {
                     BookID = 1,
-                    UserID = 4,
+                    UserID = "4e563731-e00e-4613-8d48-43292ae95427",
                     Booked = true,
                     ReturnDate = new DateTime(2024, 5, 2)
                 },
                 new BookReservations
                 {
                     BookID = 2,
-                    UserID = 4,
+                    UserID = "4e563731-e00e-4613-8d48-43292ae95427",
                     Booked = false,
                     ReturnDate = new DateTime(2022, 5, 2)
                 },
                 new BookReservations
                 {
                     BookID = 3,
-                    UserID = 4,
+                    UserID = "4e563731-e00e-4613-8d48-43292ae95427",
                     Booked = true,
                     ReturnDate = new DateTime(2021, 5, 2)
                 }

@@ -104,10 +104,17 @@
             <td>
                 @if(Model != null && Model.BookAvailability != null)
                 {
-                    if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id])
+                    if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id] )
                     {
+                        if (Model.LoggedIn == false)
+                        {
+                            <p>This item is available to book this item you need to login and return to this page</p>
+                        }
+                        else
+                        {
                             <p>Is Available</p>
                             <a href="@Url.Page("./CreateBooking", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Book</a>
+                        }
                     }
                     else
                     {
@@ -119,13 +126,16 @@
                         {
                             <p>Return Date: @Model.BookReturnDates[item.Id]?.ToShortDateString()</p>
                         }
-                    }
+                    }   
                 }
             </td>
             <td>
-                <a href="@Url.Page("./Edit", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
+                @if (Model != null && Model.IsAdmin)
+                {
+                    <a href="@Url.Page("./Edit", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                }
                 <a href="@Url.Page("./Details", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Details</a>  
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

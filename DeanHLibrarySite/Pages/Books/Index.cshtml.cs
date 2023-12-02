@@ -10,16 +10,23 @@ using DeanHLibrarySite.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.VisualBasic;
 
 namespace DeanHLibrarySite.Pages.Books
 {
     public class IndexModel : PageModel
     {
         private readonly DeanHLibrarySite.Data.DeanHLibrarySiteContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public IndexModel(DeanHLibrarySite.Data.DeanHLibrarySiteContext context)
+        public IndexModel(DeanHLibrarySite.Data.DeanHLibrarySiteContext context, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public IList<BookTable> BookTable { get;set; } = default!; 
@@ -147,9 +154,46 @@ namespace DeanHLibrarySite.Pages.Books
                     BookReturnDateExpired[book.Id] = returnDate < DateTime.Today;
                 }
             }
+
+            string userLogin = await GetLoggedInUserIdAsync();
+
+            LoggedIn = userLogin != null;
+            IsAdmin = await GetLoggedInUserAdminPermissionsAsync();
         }
 
+        private async Task<string> GetLoggedInUserIdAsync()
+        {
+            if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
 
+                // Check if the user is not null
+                if (user != null)
+                {
+                    return user.Id;
+                }
+            }
+
+            return null;
+        }
+        private async Task<bool> GetLoggedInUserAdminPermissionsAsync()
+        {
+            if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+                // Check if the user is not null
+                if (user != null)
+                {
+                    return user.IsAdmin;
+                }
+            }
+
+            return false;
+        }
+
+        public bool LoggedIn { get; set; } = false;
+        public bool IsAdmin { get; set; } = false;
         public Dictionary<int, bool> BookAvailability { get; set; }
         public Dictionary<int, DateTime?> BookReturnDates { get; set; }
         public Dictionary<int, bool> BookReturnDateExpired { get; set; }

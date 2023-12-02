@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using DeanHLibrarySite.Data;
 using DeanHLibrarySite.Models;
+using Microsoft.AspNetCore.Identity;
+using DeanHLibrarySite.Pages;
+
 namespace DeanHLibrarySite
 {
     public class Program
@@ -12,8 +15,14 @@ namespace DeanHLibrarySite
             builder.Services.AddDbContext<DeanHLibrarySiteContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DeanHLibrarySiteContext") ?? throw new InvalidOperationException("Connection string 'DeanHLibrarySiteContext' not found.")));
 
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DeanHLibrarySiteContext>();
+
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddScoped<UserManager<ApplicationUser>>();
 
             var app = builder.Build();
 

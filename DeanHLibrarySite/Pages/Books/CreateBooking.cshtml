@@ -10,23 +10,36 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
-            <input type="hidden" asp-for="ItemId" />
-            <input type="hidden" asp-for="Title" />
-            <input type="hidden" asp-for="PageNumber" />
-            <input type="hidden" asp-for="Author" />
-            <input type="hidden" asp-for="Genre" />
-            <input type="hidden" asp-for="PublicationYear" />
-            <input type="hidden" asp-for="SelectedBookTypes" /> 
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <p>You are about to book out - </p>
+        @if (Model.ConfirmedBooking)
+        {
+            <p>We have confirmed your booking of </p>
             <p>@Model.BookTitle</p>
-            <p>Confirm</p> 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
-            </div>
-        </form>
+            <p>You must return by the </p>
+            <p>@Model.BookingDateExpiry</p> 
+            <p>The book will be ready within an working hour of this confirmation. Please collect at collection station by the reception</p>
+        } 
+        else
+        {            
+            <form method="post">
+                <input type="hidden" asp-for="ItemId" />
+                <input type="hidden" asp-for="Title" />
+                <input type="hidden" asp-for="PageNumber" />
+                <input type="hidden" asp-for="Author" />
+                <input type="hidden" asp-for="Genre" />
+                <input type="hidden" asp-for="PublicationYear" />
+                <input type="hidden" asp-for="SelectedBookTypes" /> 
+                <input type="hidden" asp-for="ConfirmedBooking" />
+                <input type="hidden" asp-for="BookingDateExpiry" /> 
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <p>You are about to book out - </p>
+                <p>@Model.BookTitle</p> 
+                <div class="form-group">
+                    <input type="submit" value="Confirm Booking" class="btn btn-primary" />
+                </div>
+            </form>
+        } 
     </div>
 </div>
 
