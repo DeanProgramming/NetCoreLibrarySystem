@@ -2,3 +2,27 @@
 @model DeanHLibrarySite.Pages.IndexModel
 @{
 }
+
+
+<p>Hi ? </p>
+
+<a asp-page="./Books/Index"> View Books ?</a>
+<br />
+
+@if (Model != null && Model.LoggedIn)
+{ 
+    if (Model.IsAdmin == false)
+    {       
+        <a asp-page="./Books/ViewBookings"> View Your Current Bookings</a>
+    } 
+    else
+    {
+        <a asp-page="./StaffControls/ReturnBookingIndex"> View All Bookings</a>
+    }
+}
+
+
+<partial name="_LoginPartial" />
+
+
+
