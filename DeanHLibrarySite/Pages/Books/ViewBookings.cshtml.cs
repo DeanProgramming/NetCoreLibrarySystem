@@ -37,6 +37,10 @@ namespace DeanHLibrarySite.Pages.Books
 
             userBookings = userBookings.Where(s => s.UserID == userID);
 
+            userBookings = userBookings.Where(s => s.Booked);
+
+            userBookings = userBookings.OrderBy(s => s.BookID);
+
             var bookingBookIDs = userBookings.Select(s => s.BookID);
 
             bookList = bookList.Where(s => bookingBookIDs.Contains(s.Id));

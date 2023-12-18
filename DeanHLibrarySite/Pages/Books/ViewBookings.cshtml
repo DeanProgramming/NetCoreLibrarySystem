@@ -41,7 +41,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => Model.BookReservations[i].ReturnDate)
                                                
-                        @if (Model.BookReturnDateExpired[i])
+                        @if (i < Model.BookReturnDateExpired.Count && Model.BookReturnDateExpired[i])
                         {
                             <p>Passed return date please return your book.</p>
                         }

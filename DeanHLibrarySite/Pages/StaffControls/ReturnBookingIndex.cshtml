@@ -18,6 +18,12 @@
         <br />
         Name: <input type="text" id="userName" asp-for="UserName" />
         <br />
+
+        @if (Model != null && Model.FoundUser == false)
+        {
+            <h1> Couldnt find user </h1>
+            <br />
+        }        
         <h1>Returned Books</h1> 
         <br />
         Type of Media : 
@@ -39,10 +45,7 @@
 
         <input type="submit" value="Filter" />
 
-        @if (Model != null && Model.FoundUser == false)
-        {
-            <h1> Couldnt find user </h1>
-        }
+
     </p>
     <br />
 </form>
@@ -65,6 +68,7 @@
 </div>
 
 
+
 <table class="table">
     <thead>
         <tr>
@@ -73,6 +77,9 @@
             </th>
             <th>
                 <p>UserName</p>
+            </th>
+            <th>
+                <p>Check Book History</p>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookTable[0].Type)
@@ -92,29 +99,32 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.BookTable)
+        @for (int i = 0; i < Math.Max(Model.BookReservations.Count, Model.UserNames.Count); i++)
         {
             <tr>
                 <td>
-                    <a href="@Url.Page("./ReturnItemDetails", new {bookID = item.Id})" class="button-link">Select here to return</a>
+                    <a href="@Url.Page("./ReturnItemDetails", new {bookID = Model.BookTable[i].Id})" class="button-link">Select here to return</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    @Html.DisplayFor(modelItem => Model.UserNames[i])
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    <a href="@Url.Page("./BookHistoryCheck", new {bookID = Model.BookTable[i].Id})" class="button-link">Check History</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => Model.BookTable[i].Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author)
+                    @Html.DisplayFor(modelItem => Model.BookTable[i].Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
+                    @Html.DisplayFor(modelItem => Model.BookTable[i].Author)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PublicationYear)
+                    @Html.DisplayFor(modelItem => Model.BookTable[i].Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.BookTable[i].PublicationYear)
                 </td>
             </tr>
         }

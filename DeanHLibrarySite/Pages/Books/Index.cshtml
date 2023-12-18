@@ -7,9 +7,12 @@
 
 <h1>Library Listing</h1>
 
-<p>
-    <a asp-page="Create">Create New Library Entry</a>
-</p>
+@if (Model != null && Model.IsAdmin)
+{
+    <p>
+        <a asp-page="Create">Create New Library Entry</a>
+    </p>
+} 
 
 <form>
     <p>
@@ -134,6 +137,7 @@
                 {
                     <a href="@Url.Page("./Edit", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
                     <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        <a href="@Url.Page("../StaffControls/BookHistoryCheck", new {bookID = item.Id })" class="button-link">Check Book History</a>
                 }
                 <a href="@Url.Page("./Details", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Details</a>  
             </td>

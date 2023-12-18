@@ -1,0 +1,49 @@
+﻿@page
+@model DeanHLibrarySite.Pages.StaffControls.BookHistoryCheckModel
+@{
+}
+
+@if (Model != null && Model.IsAdmin == false)
+{
+    <p>Incorrect permissions - Need to log in to an admin role</p>
+    return;
+}
+
+<h1>
+	List of all previous owners of item
+</h1>
+
+<table class="table">
+<thead>
+    <tr> 
+        <th>
+            <p>UserName</p>
+        </th>
+        <th>
+            <p>Date Returned</p>
+        </th>
+        <th>
+            <p>UserID</p>
+        </th>
+    </tr>
+</thead>
+<tbody>
+        @for (int i = 0; i < Math.Max(Model.BookReservations.Count, Model.UserNames.Count); i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.UserNames[i])
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => Model.BookReservations[i].ReturnDate)
+                </td> 
+
+                <td>
+                    @Html.DisplayFor(modelItem => Model.BookReservations[i].UserID)
+                </td>
+
+            </tr>
+        }
+</tbody>
+</table>

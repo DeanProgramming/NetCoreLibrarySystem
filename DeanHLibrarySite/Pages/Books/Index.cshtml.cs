@@ -57,44 +57,6 @@ namespace DeanHLibrarySite.Pages.Books
                 SelectedBookTypes = bookType;
             }
 
-            //SelectedBookTypes = bookType;
-
-            // Preserve filter values in the query string
-            var queryString = new StringBuilder("?");
-
-            if (!string.IsNullOrEmpty(Title))
-            {
-                queryString.Append($"Title={Title}&");
-            }
-
-            if (!string.IsNullOrEmpty(Author))
-            {
-                queryString.Append($"Author={Author}&");
-            }
-
-            if (!string.IsNullOrEmpty(Genre))
-            {
-                queryString.Append($"Genre={Genre}&");
-            }
-
-            if (PublicationYear != null)
-            {
-                queryString.Append($"PublicationYear={PublicationYear}&");
-            }
-
-            if (SelectedBookTypes != null)
-            {
-                queryString.Append($"SelectedBookTypes={SelectedBookTypes}&");
-            }
-
-            // Remove trailing '&' character
-            queryString.Length--;
-
-            // Generate URLs with query string parameters
-            PreviousPageUrl = Url.Page("./Index", new { pageNumber = pageNumber - 1, title, author, genre, publicationYear, bookType = SelectedBookTypes }) + queryString.ToString();
-            NextPageUrl = Url.Page("./Index", new { pageNumber = pageNumber + 1, title, author, genre, publicationYear, bookType = SelectedBookTypes }) + queryString.ToString();
-
-
             if (!string.IsNullOrEmpty(Title))
             {
                 bookList = bookList.Where(s => s.Title.Contains(Title));

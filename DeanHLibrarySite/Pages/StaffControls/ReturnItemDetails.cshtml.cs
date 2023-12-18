@@ -63,7 +63,7 @@ namespace DeanHLibrarySite.Pages.StaffControls
         public async Task<IActionResult> OnPostAsync()
         {
             var reservations = await _context.BookReservations
-                .FirstOrDefaultAsync(x => x.UserID == BookedUserID);
+                .FirstOrDefaultAsync(x => x.BookID == BookID && x.Booked);
 
             if (reservations != null)
             {

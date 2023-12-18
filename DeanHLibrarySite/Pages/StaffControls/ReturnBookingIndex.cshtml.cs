@@ -15,6 +15,7 @@ namespace DeanHLibrarySite.Pages.StaffControls
     {
         public IList<BookTable> BookTable { get; set; } = default!;
         public IList<BookReservations> BookReservations { get; set; } = default!;
+        public List<string> UserNames { get; set; } = new List<string>();
 
         private readonly DeanHLibrarySite.Data.DeanHLibrarySiteContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -72,55 +73,8 @@ namespace DeanHLibrarySite.Pages.StaffControls
                 SelectedBookTypes = bookType;
             }
 
-
-            // Preserve filter values in the query string
-            var queryString = new StringBuilder("?");
-
-            if (!string.IsNullOrEmpty(Title))
-            {
-                queryString.Append($"Title={Title}&");
-            }
-
-            if (!string.IsNullOrEmpty(Author))
-            {
-                queryString.Append($"Author={Author}&");
-            }
-
-            if (!string.IsNullOrEmpty(Genre))
-            {
-                queryString.Append($"Genre={Genre}&");
-            }
-
-            if (PublicationYear != null)
-            {
-                queryString.Append($"PublicationYear={PublicationYear}&");
-            }
-
-            if (SelectedBookTypes != null)
-            {
-                queryString.Append($"SelectedBookTypes={SelectedBookTypes}&");
-            }
-
-            if (!string.IsNullOrEmpty(UserID))
-            {
-                queryString.Append($"UserID={UserID}&");
-            }
-
-            if (!string.IsNullOrEmpty(UserName))
-            {
-                queryString.Append($"UserName={UserName}&");
-            }
-
-
-            // Remove trailing '&' character
-            queryString.Length--;
-
-            // Generate URLs with query string parameters
-            PreviousPageUrl = Url.Page("./ReturnBookingIndex", new { pageNumber = pageNumber - 1, title, author, genre, publicationYear, bookType = SelectedBookTypes, userID, userName }) + queryString.ToString();
-            NextPageUrl = Url.Page("./ReturnBookingIndex", new { pageNumber = pageNumber + 1, title, author, genre, publicationYear, bookType = SelectedBookTypes, userID, userName }) + queryString.ToString();
-
-
             userBookings = userBookings.Where(s => s.Booked);
+            userBookings = userBookings.OrderBy(s => s.BookID);
             var bookingBookIDs = userBookings.Select(s => s.BookID);
             bookList = bookList.Where(s => bookingBookIDs.Contains(s.Id));
 
@@ -181,8 +135,7 @@ namespace DeanHLibrarySite.Pages.StaffControls
                 }
             }
 
-            bookList = bookList.Where(s => bookingBookIDs.Contains(s.Id));
-
+            bookList = bookList.Where(s => bookingBookIDs.Contains(s.Id)); 
 
             int pageSize = 5;
             AmountOfPages = (int)Math.Ceiling((float)bookList.Count() / (float)pageSize);
@@ -195,6 +148,18 @@ namespace DeanHLibrarySite.Pages.StaffControls
             BookTypes = new SelectList(await bookTypeQuery.Distinct().ToListAsync());
             BookTable = await bookList.ToListAsync();
             BookReservations = await userBookings.ToListAsync();
+
+            UserNames.Clear();
+
+            for (int e = 0; e < BookReservations.Count; e++)
+            {
+                ApplicationUser? applicationUser = _userManager.Users.FirstOrDefault(b => b.Id == BookReservations[e].UserID);
+
+                if (applicationUser != null)
+                {
+                    UserNames.Add(applicationUser.Name);
+                }
+            }
         }
 
         [BindProperty(SupportsGet = true)]
