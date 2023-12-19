@@ -12,42 +12,38 @@
 
 <h1>Returned Books</h1>
 
-<form>
-    <p>
-        User ID: <input type="text" id="userID" asp-for="UserID" />
-        <br />
-        Email Address: <input type="text" id="userName" asp-for="UserName" />
-        <br />
+<form class="library-form">
+    <label for="UserID">User ID:</label>
+    <input type="text" id="userID" asp-for="UserID" />
 
-        @if (Model != null && Model.FoundUser == false)
-        {
-            <h1> Couldnt find user </h1>
-            <br />
-        }        
-        <h1>Returned Books</h1> 
-        <br />
-        Type of Media : 
-        <select asp-for="SelectedBookTypes" asp-items="Model.BookTypes">
-            <option value="">All</option>
-        </select>        
-        <br />
-        Genre :
-        <select asp-for="Genre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
-        <br />
-        Title: <input type="text" asp-for="Title" />
-        <br />
-        Author: <input type="text" asp-for="Author" />
-        <br />
-        Publication Year: <input type="date" id="publicationYear" asp-for="PublicationYear" /> 
-        <br />
+    <label for="UserName">Email Address:</label>
+    <input type="text" id="userName" asp-for="UserName" />
 
-        <input type="submit" value="Filter" />
+    @if (Model != null && Model.FoundUser == false)
+    {
+        <h1> Couldn't find user </h1>
+    }
 
+    <label for="SelectedBookTypes">Type of Media:</label>
+    <select asp-for="SelectedBookTypes" asp-items="Model.BookTypes">
+        <option value="">All</option>
+    </select>
 
-    </p>
-    <br />
+    <label for="Genre">Genre:</label>
+    <select asp-for="Genre" asp-items="Model.Genres">
+        <option value="">All</option>
+    </select>
+
+    <label for="Title">Title:</label>
+    <input type="text" asp-for="Title" />
+
+    <label for="Author">Author:</label>
+    <input type="text" asp-for="Author" />
+
+    <label for="PublicationYear">Publication Year:</label>
+    <input type="date" id="publicationYear" asp-for="PublicationYear" />
+
+    <input type="submit" value="Filter" />
 </form>
 
 <div id="pageNumberDisplay">

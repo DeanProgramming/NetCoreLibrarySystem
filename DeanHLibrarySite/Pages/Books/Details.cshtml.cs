@@ -8,16 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using DeanHLibrarySite.Data;
 using DeanHLibrarySite.Models;
 using Humanizer.Localisation;
+using Microsoft.AspNetCore.Identity;
 
 namespace DeanHLibrarySite.Pages.Books
 {
     public class DetailsModel : PageModel
     {
-        private readonly DeanHLibrarySite.Data.DeanHLibrarySiteContext _context;
 
-        public DetailsModel(DeanHLibrarySite.Data.DeanHLibrarySiteContext context)
+        private readonly DeanHLibrarySite.Data.DeanHLibrarySiteContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public DetailsModel(DeanHLibrarySite.Data.DeanHLibrarySiteContext context, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public BookTable BookTable { get; set; } = default!; 
@@ -48,8 +54,23 @@ namespace DeanHLibrarySite.Pages.Books
             if (bookType != null)
             {
                 SelectedBookTypes = bookType;
-            }
+            } 
 
+            IsAdmin = false;
+
+            if (User != null)
+            {
+                if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+                    // Check if the user is not null
+                    if (user != null)
+                    {
+                        IsAdmin = user.IsAdmin;
+                    }
+                }
+            }
 
             return Page();
         }
@@ -67,5 +88,7 @@ namespace DeanHLibrarySite.Pages.Books
         public DateTime? PublicationYear { get; set; }
         [BindProperty(SupportsGet = true)]
         public Models.BookTable.BookType? SelectedBookTypes { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool IsAdmin { get; set; } = true;
     }
 }

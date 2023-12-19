@@ -3,25 +3,73 @@
 @{
 }
 
+<style>
+    /* Add some styling for the menu */
+    body {
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 24px; /* Adjust the font size as needed */
+        font-weight: bold;
+    }
+
+    /* Center the grid-based options */
+    .menu-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        margin: 20px auto; /* Center the options horizontally */
+        max-width: 800px; /* Set a max-width for better readability */
+    }
+
+    /* Style each option */
+    .menu-option {
+        padding: 10px;
+        background-color: #f0f0f0; /* Add your preferred background color */
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #333;
+        display: block;
+        text-align: center;
+        font-size: 18px; /* Adjust the font size as needed */
+        font-weight: bold;
+    }
+
+    .menu-option button {
+        background: none; /* Remove background */
+        border: none; /* Remove border */
+        padding: 0; /* Reset padding */
+        font: inherit; /* Inherit font styles */
+        cursor: pointer;
+    }
+</style>
+
 <h1>Menu</h1>
 
-<a asp-page="./Books/Index"> View Books ?</a>
-<br />
+<div class="menu-options">
+    <a asp-page="./Books/Index" class="menu-option">View Books</a>
 
-@if (Model != null && Model.LoggedIn)
-{ 
-    if (Model.IsAdmin == false)
-    {       
-        <a asp-page="./Books/ViewBookings"> View Your Current Bookings</a>
+    @if (Model != null && Model.LoggedIn)
+    {
+        if (Model.IsAdmin == false)
+        {
+            <a asp-page="./Books/ViewBookings" class="menu-option">View Your Current Bookings</a>
+        }
+        else
+        {
+            <a asp-page="./StaffControls/ReturnBookingIndex" class="menu-option">View All Bookings</a>
+        }
+         
+        <form id="logoutForm" class="menu-option" asp-area="Identity" asp-page="/Account/Logout" method="post" asp-route-returnUrl="/">
+            <button type="submit">Logout</button>
+        </form>
     } 
     else
     {
-        <a asp-page="./StaffControls/ReturnBookingIndex"> View All Bookings</a>
+        <a asp-area="Identity" asp-page="/Account/Login" class="menu-option">Login</a>
+
+
+        <a asp-area="Identity" asp-page="/Account/Register" class="menu-option">Register</a>
     }
-}
-
-
-<partial name="_LoginPartial" />
-
-
-
+</div>

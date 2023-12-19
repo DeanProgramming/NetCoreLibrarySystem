@@ -19,35 +19,37 @@
 
 <h1>Returned Books</h1>
 
-<form method="post">
-    @{
-        <h1>User that booked the item</h1>
-        @Model.BookedUserName
+<div class="confirmation-message">
+    <form method="post">
+        @{
+            <h1>User that booked the item</h1>
+            @Model.BookedUserName
         
-        <br />
-        <h1>Book Name</h1>
-        @Model.BookName
+            <br />
+            <h1>Book Name</h1>
+            @Model.BookName
 
-        <br />
-        if (Model.BookHandInDate >= Model.CurrentDate)
-        {
-            <p>Handed in time</p>
+            <br />
+            if (Model.BookHandInDate >= Model.CurrentDate)
+            {
+                <p>Handed in time</p>
+            }
+            else
+            {
+                <p>NOT handed in time - Disciplinary action may be needed</p>
+            } 
         }
-        else
-        {
-            <p>NOT handed in time - Disciplinary action may be needed</p>
-        } 
-    }
 
-    <p>
-        <input type="hidden" asp-for="BookID" />
-        <input type="hidden" asp-for="BookName" />
-        <input type="hidden" asp-for="BookedUserName" />
-        <input type="hidden" asp-for="BookedUserID" />
-        <input type="hidden" asp-for="BookHandInDate" />
-        <input type="hidden" asp-for="CurrentDate" /> 
+        <p>
+            <input type="hidden" asp-for="BookID" />
+            <input type="hidden" asp-for="BookName" />
+            <input type="hidden" asp-for="BookedUserName" />
+            <input type="hidden" asp-for="BookedUserID" />
+            <input type="hidden" asp-for="BookHandInDate" />
+            <input type="hidden" asp-for="CurrentDate" /> 
 
-        <input type="submit" value="Confirm" /> 
-    </p>
-    <br />
-</form>
+            <input type="submit" value="Confirm" /> 
+        </p>
+        <br />
+    </form>
+</div>

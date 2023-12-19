@@ -17,6 +17,107 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+.button-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
+
+.button-link:hover {
+    background-color: #45a049;
+}
+
+#pageNumberDisplay {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    #pageNumberDisplay span {
+        font-size: 16px;
+    }
+
+    #pageNumberDisplay text {
+        margin: 0 10px;
+    }
+
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.library-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+    gap: 15px;
+}
+
+.library-form p {
+    margin: 0; /* Remove default margin for <p> elements */
+}
+
+.library-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.library-form select,
+.library-form input,
+.library-form input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.library-form input[type="submit"] {
+    grid-column: span 2; /* Span the button across two columns */
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.confirmation-message {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+    .confirmation-message p {
+        margin: 10px 0;
+    }
+
+    .confirmation-message strong {
+        color: #258cfb;
+    }

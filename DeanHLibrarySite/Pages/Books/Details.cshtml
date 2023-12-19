@@ -7,7 +7,7 @@
 
 <h1>Details</h1>
 
-<div>
+<div class="confirmation-message">
     <h4>BookTable</h4>
     <hr />
     <dl class="row">
@@ -50,6 +50,10 @@
     </dl>
 </div>
 <div>
-    <a href="@Url.Page("./Edit", new {id = @Model.BookTable?.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
+
+    @if (Model != null && Model.IsAdmin)
+    {
+        <a href="@Url.Page("./Edit", new {id = @Model.BookTable?.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
+    }
     <a href="@Url.Page("./Index", new {pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Back</a> 
 </div>
