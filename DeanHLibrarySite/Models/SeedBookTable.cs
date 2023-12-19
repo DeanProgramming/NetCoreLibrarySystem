@@ -18,7 +18,6 @@ namespace DeanHLibrarySite.Models
                     throw new ArgumentNullException("Null RazorPagesMovieContext");
                 }
 
-
                 if (context.BookTable.Any())
                 {
                     return;   // DB has been seeded

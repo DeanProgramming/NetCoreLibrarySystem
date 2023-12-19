@@ -110,28 +110,41 @@ namespace DeanHLibrarySite.Pages.StaffControls
 
                 if (foundUser != null)
                 {
-                    var itemsTakenOutByUserIds = userBookings
-                        .Where(i => i.UserID == foundUser.Id)
-                        .Select(i => i.BookID);
-                     
+                    var latestBookings = userBookings
+                        .GroupBy(i => i.BookID)
+                        .Select(group => group.OrderByDescending(i => i.ReturnDate).FirstOrDefault())
+                        .ToList(); // Materialize the query to avoid issues
 
-                    bookList = bookList.Where(s => itemsTakenOutByUserIds.Contains(s.Id));  
+                    var bookIdsTakenOutByUser = latestBookings
+                        .Where(i => i.UserID == foundUser.Id)
+                        .Select(i => i.BookID)
+                        .ToList(); // Extract BookIDs from latestBookings
+
+                    userBookings = userBookings.Where(s => s.UserID == foundUser.Id);
+                    bookList = bookList.Where(s => bookIdsTakenOutByUser.Contains(s.Id));
                 } 
             }
 
             if (!string.IsNullOrEmpty(UserName))
             {
                 _userManager.FindByNameAsync(UserName).Wait();
-                var foundUser = _userManager.FindByNameAsync(UserName).Result;
+                ApplicationUser foundUser = await _userManager.FindByNameAsync(UserName);
                 FoundUser = foundUser != null;
 
                 if (foundUser != null)
                 {
-                    var itemsTakenOutByUserIds = userBookings
-                        .Where(i => i.UserID == foundUser.Id)
-                        .Select(i => i.BookID);
+                    var latestBookings = userBookings
+                        .GroupBy(i => i.BookID)
+                        .Select(group => group.OrderByDescending(i => i.ReturnDate).FirstOrDefault())
+                        .ToList(); // Materialize the query to avoid issues
 
-                    bookList = bookList.Where(s => itemsTakenOutByUserIds.Contains(s.Id)); 
+                    var bookIdsTakenOutByUser = latestBookings
+                        .Where(i => i.UserID == foundUser.Id)
+                        .Select(i => i.BookID)
+                        .ToList(); // Extract BookIDs from latestBookings
+
+                    userBookings = userBookings.Where(s => s.UserID == foundUser.Id);
+                    bookList = bookList.Where(s => bookIdsTakenOutByUser.Contains(s.Id));
                 }
             }
 
@@ -151,7 +164,7 @@ namespace DeanHLibrarySite.Pages.StaffControls
 
             UserNames.Clear();
 
-            for (int e = 0; e < BookReservations.Count; e++)
+            for (int e = itemsToSkip; e < BookReservations.Count; e++)
             {
                 ApplicationUser? applicationUser = _userManager.Users.FirstOrDefault(b => b.Id == BookReservations[e].UserID);
 

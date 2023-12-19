@@ -16,7 +16,7 @@
     <p>
         User ID: <input type="text" id="userID" asp-for="UserID" />
         <br />
-        Name: <input type="text" id="userName" asp-for="UserName" />
+        Email Address: <input type="text" id="userName" asp-for="UserName" />
         <br />
 
         @if (Model != null && Model.FoundUser == false)
@@ -54,7 +54,7 @@
     <span>
         @if (Model.PageNumber > 1)
         {
-            <a href="@Url.Page("./ReturnItemDetails", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Previous</a>
+            <a href="@Url.Page("./ReturnBookingIndex", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Previous</a>
         }
         @if (Model.AmountOfPages != 0)
         {
@@ -62,7 +62,7 @@
         }
         @if (Model.PageNumber < Model.AmountOfPages)
         {
-            <a href="@Url.Page("./ReturnItemDetails", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Next</a>
+            <a href="@Url.Page("./ReturnBookingIndex", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Next</a>
         }
     </span>
 </div>
@@ -99,7 +99,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < Math.Max(Model.BookReservations.Count, Model.UserNames.Count); i++)
+        @for (int i = 0; i < Math.Min(Model.BookTable.Count, Model.UserNames.Count); i++)
         {
             <tr>
                 <td>

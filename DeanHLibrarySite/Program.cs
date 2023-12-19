@@ -32,7 +32,15 @@ namespace DeanHLibrarySite
 
                 SeedBookTable.Initialize(services);
                 SeedReservations.Initialize(services);
+
+                // Call the InitializeAsync method from SeedUsers
+                SeedUsers.InitializeAsync(
+                    services,
+                    services.GetRequiredService<UserManager<ApplicationUser>>(),
+                    services.GetRequiredService<IUserStore<ApplicationUser>>(),
+                    services.GetRequiredService<SignInManager<ApplicationUser>>()).Wait(); // Ensure the method completes before moving forward
             }
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
