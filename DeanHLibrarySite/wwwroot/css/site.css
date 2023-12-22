@@ -114,10 +114,51 @@ h1 {
     text-align: left;
 }
 
-    .confirmation-message p {
-        margin: 10px 0;
+.confirmation-message p {
+    margin: 10px 0;
+}
+
+.confirmation-message strong {
+    color: #258cfb;
+}
+
+/* Styles specific to the menu */
+.menu-container {
+    text-align: center;
+}
+
+    .menu-container h1 {
+        font-size: 24px; /* Adjust the font size as needed */
+        font-weight: bold;
     }
 
-    .confirmation-message strong {
-        color: #258cfb;
+
+/* Center the grid-based options */
+.menu-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 20px auto; /* Center the options horizontally */
+    max-width: 800px; /* Set a max-width for better readability */
+}
+
+/* Style each option */
+.menu-option {
+    padding: 10px;
+    background-color: #f0f0f0; /* Add your preferred background color */
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    text-align: center;
+    font-size: 18px; /* Adjust the font size as needed */
+    font-weight: bold;
+}
+
+    .menu-option button {
+        background: none; /* Remove background */
+        border: none; /* Remove border */
+        padding: 0; /* Reset padding */
+        font: inherit; /* Inherit font styles */
+        cursor: pointer;
     }
