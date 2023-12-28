@@ -106,7 +106,7 @@
                 @if(Model != null && Model.BookAvailability != null)
                 {
                     if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id] )
-                    {
+                    {         
                         if (Model.LoggedIn == false)
                         {
                             <p>This item is available to book this item you need to login and return to this page</p>
@@ -114,7 +114,10 @@
                         else
                         {
                             <p>Is Available</p>
-                            <a href="@Url.Page("./CreateBooking", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Book</a>
+                            if (Model.IsAdmin == false)
+                            {
+                                <a href="@Url.Page("./CreateBooking", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Book</a>
+                            }                               
                         }
                     }
                     else
