@@ -50,8 +50,11 @@ namespace DeanHLibrarySite.Pages.Books
             Genre = genre;
             PageNumber = pageNumber;
             PublicationYear = publicationYear;
-            ConfirmedBooking = confirmedBooking;
-            BookingDateExpiry = returnDate;
+            ConfirmedBooking = confirmedBooking; 
+            if (DateTime.TryParse(Request.Query["returnDate"], out DateTime tryReturnDate))
+            {
+                BookingDateExpiry = tryReturnDate;
+            }
 
             if (bookType != null)
             {
@@ -115,7 +118,7 @@ namespace DeanHLibrarySite.Pages.Books
                 queryString.Append($"bookType={SelectedBookTypes.ToString()}&");
             }
 
-            queryString.Append($"returnDate={newReservation.ReturnDate}&");
+            queryString.Append($"returnDate={newReservation.ReturnDate.ToString("yyyy-MM-dd HH:mm:ss")}&");
             queryString.Append($"confirmedBooking={true}&");
 
             // Remove the trailing '&' character
