@@ -2,6 +2,9 @@
 
 The Library Management System is a comprehensive .NET Core and .NET 7.0 project developed to simplify the management and exploration of an extensive collection of books, DVDs, and CDs.
 
+## Design Documentation
+[Design Document](https://deanprogramming.github.io/CV/Library%20System%20Design%20Doc.pdf) 
+
 ## Key Features
 
 ### 1. Search and Filter Capabilities
