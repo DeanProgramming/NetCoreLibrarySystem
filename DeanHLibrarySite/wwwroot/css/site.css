@@ -1,35 +1,49 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+body {
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
 }
 
 .button-link {
     display: inline-block;
     padding: 8px 16px;
     background-color: #4caf50;
-    color: white;
+    color: #fff;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.button-link:hover {
-    background-color: #45a049;
-}
+    .button-link:hover {
+        background-color: #45a049;
+    }
+
 
 #pageNumberDisplay {
     text-align: center;
@@ -40,21 +54,6 @@ html {
         font-size: 16px;
     }
 
-    #pageNumberDisplay text {
-        margin: 0 10px;
-    }
-
-body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    margin: 20px;
-}
-
-h1 {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-}
 
 .library-form {
     max-width: 500px;
@@ -65,43 +64,43 @@ h1 {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
 }
 
-.library-form p {
-    margin: 0; /* Remove default margin for <p> elements */
-}
+    .library-form p {
+        margin: 0;
+    }
 
-.library-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-}
+    .library-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 700;
+        color: #555;
+    }
 
-.library-form select,
-.library-form input,
-.library-form input[type="date"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
+    .library-form select,
+    .library-form input,
+    .library-form input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
 
-.library-form input[type="submit"] {
-    grid-column: span 2; /* Span the button across two columns */
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
+        .library-form input[type="submit"] {
+            grid-column: span 2;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
 
 .confirmation-message {
     max-width: 600px;
@@ -114,51 +113,454 @@ h1 {
     text-align: left;
 }
 
-.confirmation-message p {
-    margin: 10px 0;
-}
+    .confirmation-message p {
+        margin: 10px 0;
+    }
 
-.confirmation-message strong {
-    color: #258cfb;
-}
+    .confirmation-message strong {
+        color: #258cfb;
+    }
 
-/* Styles specific to the menu */
+
 .menu-container {
     text-align: center;
 }
 
     .menu-container h1 {
-        font-size: 24px; /* Adjust the font size as needed */
-        font-weight: bold;
+        font-size: 24px;
+        font-weight: 700;
     }
 
-
-/* Center the grid-based options */
 .menu-options {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 10px;
-    margin: 20px auto; /* Center the options horizontally */
-    max-width: 800px; /* Set a max-width for better readability */
+    margin: 20px auto;
+    max-width: 800px;
 }
 
-/* Style each option */
 .menu-option {
     padding: 10px;
-    background-color: #f0f0f0; /* Add your preferred background color */
+    background-color: #f0f0f0;
     border: 1px solid #ccc;
     text-decoration: none;
     color: #333;
     display: block;
     text-align: center;
-    font-size: 18px; /* Adjust the font size as needed */
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.menu-option button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.action-buttons .button-link {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.action-buttons .action-edit {
+    background-color: #4caf50;
+}
+
+.action-buttons .action-delete {
+    background-color: #d9534f;
+}
+
+.action-buttons .action-history {
+    background-color: #6c757d;
+}
+
+.action-buttons .action-details {
+    background-color: #258cfb;
+}
+
+table td {
+    vertical-align: top;
+}
+
+/* Identity Handling */
+:root {
+    --auth-bg1: #0f172a;
+    --auth-bg2: #111827; 
+    --card-bg: rgba(255, 255, 255, 0.92);
+    --card-border: rgba(255, 255, 255, 0.25);
+    --text: #0f172a;
+    --muted: #64748b;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --danger: #dc2626;
+    --ring: rgba(37, 99, 235, 0.35);
+    --radius: 16px;
+}
+
+.auth-page {
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+.auth-card {
+    width: min(960px, 100%);
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.auth-side {
+    padding: 42px;
+    color: rgba(255, 255, 255, 0.92);
+    background: #000;
+    background-size: cover;
+}
+
+.auth-side h1 {
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 0 0 10px;
+}
+
+.auth-side p {
+    margin: 0 0 18px;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.auth-side .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 13px;
+}
+
+.auth-main {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    padding: 42px;
+}
+
+.auth-title {
+    margin: 0 0 6px;
+    font-size: 24px;
+    color: var(--text);
+}
+
+.auth-subtitle {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.auth-form .form-floating,
+.auth-form .form-group {
+    margin-bottom: 14px;
+}
+
+.auth-form label {
+    font-weight: 600;
+}
+
+.auth-form .form-control {
+    border-radius: 12px;
+    border: 1px solid rgba(15, 23, 42, 0.14);
+    padding: 12px 14px;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.08s ease;
+}
+
+.auth-form .form-control:focus {
+    border-color: rgba(37, 99, 235, 0.65);
+    box-shadow: 0 0 0 4px var(--ring);
+}
+
+.auth-form .btn-primary {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-weight: 700;
+    background: var(--primary);
+    border: none;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+}
+
+    .auth-form .btn-primary:hover {
+        background: var(--primary-hover);
+    }
+
+.auth-form .btn:focus {
+    box-shadow: 0 0 0 4px var(--ring) !important;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.auth-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    color: rgba(100, 116, 139, 0.9);
+    font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: rgba(15, 23, 42, 0.12);
+}
+
+.validation-summary-errors,
+.text-danger {
+    color: var(--danger) !important;
+    font-size: 13px;
+}
+
+.input-validation-error {
+    border-color: rgba(220, 38, 38, 0.5) !important;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15) !important;
+}
+
+@media (max-width: 900px) {
+    .auth-card {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-side {
+        padding: 28px;
+    }
+
+    .auth-main {
+        padding: 28px;
+    }
+}
+
+.auth-external {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.auth-provider-btn {
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.auth-provider-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+     
+.menu-card {
+    grid-template-columns: 1.25fr 0.85fr;
+}
+
+.menu-side {
+    background: #000;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.auth-side-title {
+    margin: 0 0 6px;
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.auth-side-subtitle {
+    margin: 0 0 18px;
+    color: rgba(255, 255, 255, 0.82);
+}
+ 
+.menu-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 10px;
+}
+ 
+.menu-action {
+    display: block;
+    text-decoration: none;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--text);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    transition: transform 0.08s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+    .menu-action:hover {
+        transform: translateY(-1px);
+        border-color: rgba(37, 99, 235, 0.35);
+        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.1);
+    }
+
+.menu-action-title {
+    font-size: 26px;
+}
+
+.menu-action-sub {
+    font-size: 13px;
+    color: var(--muted);
+}
+ 
+.menu-logout {
+    margin-top: 6px;
+}
+
+.menu-logout-btn {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-weight: 800;
+}
+
+.menu-side-box {
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.menu-side-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+}
+
+.menu-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+}
+
+.menu-value {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.menu-side-hint {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+    .menu-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pager {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.pager-left {
+    text-align: right;
+    padding-right: 30px;
+}
+
+.pager-center {
+    text-align: center;
     font-weight: bold;
 }
 
-    .menu-option button {
-        background: none; /* Remove background */
-        border: none; /* Remove border */
-        padding: 0; /* Reset padding */
-        font: inherit; /* Inherit font styles */
-        cursor: pointer;
-    }
+.pager-right {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.col-type {
+    width: 4%;
+}
+
+.col-title {
+    width: 13%;
+}
+
+.col-author {
+    width: 12%;
+}
+
+.col-genre {
+    width: 9%;
+}
+
+.col-year {
+    width: 7%;
+}
+
+.col-description {
+    width: 22%;
+}
+
+.col-availability {
+    width: 18%;
+}
+
+.col-actions {
+    width: 15%;
+}
+
+.col-description {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.col-actions .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}

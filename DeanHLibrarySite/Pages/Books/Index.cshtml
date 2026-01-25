@@ -38,71 +38,67 @@
 </form>
 
 <div id="pageNumberDisplay">
-    <span>
-        @if (Model.PageNumber > 1)
-        {
-            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Previous</a>
-        }
-        @if (Model.AmountOfPages != 0)
-        {
-            <text>Page: <span>@Model.PageNumber</span> / @Model.AmountOfPages</text>
-        }
-        @if (Model.PageNumber < Model.AmountOfPages)
-        {
-            <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Next</a>
-        }
-    </span>
+    <div class="pager"> 
+        <div class="pager-left">
+            @if (Model.PageNumber > 1)
+            {
+                <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber - 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString() })"
+                   class="button-link">Previous</a>
+            }
+        </div> 
+        <div class="pager-center">
+            @if (Model.AmountOfPages != 0)
+            {
+                <span class="page-text">Page @Model.PageNumber / @Model.AmountOfPages</span>
+            }
+        </div> 
+        <div class="pager-right">
+            @if (Model.PageNumber < Model.AmountOfPages)
+            {
+                <a href="@Url.Page("./Index", new { pageNumber = Model.PageNumber + 1, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString() })"
+                   class="button-link">Next</a>
+            }
+        </div> 
+    </div>
 </div>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="col-type">
                 @Html.DisplayNameFor(model => model.BookTable[0].Type)
             </th>
-            <th>
+            <th class="col-title">
                 @Html.DisplayNameFor(model => model.BookTable[0].Title)
             </th>
-            <th>
+            <th class="col-author">
                 @Html.DisplayNameFor(model => model.BookTable[0].Author)
             </th>
-            <th>
+            <th class="col-genre">
                 @Html.DisplayNameFor(model => model.BookTable[0].Genre)
             </th>
-            <th>
+            <th class="col-year">
                 @Html.DisplayNameFor(model => model.BookTable[0].PublicationYear)
             </th>
-            <th>
+            <th class="col-description">
                 @Html.DisplayNameFor(model => model.BookTable[0].Description)
             </th>
-            <th>
+            <th class="col-availability">
                 <p>Availability</p>
             </th>
-            <th></th>
+            <th class="col-actions"></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.BookTable) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublicationYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
+            <td class="col-type">@Html.DisplayFor(modelItem => item.Type)</td>
+            <td class="col-title">@Html.DisplayFor(modelItem => item.Title)</td>
+            <td class="col-author">@Html.DisplayFor(modelItem => item.Author)</td>
+            <td class="col-genre">@Html.DisplayFor(modelItem => item.Genre)</td>
+            <td class="col-year">@Html.DisplayFor(modelItem => item.PublicationYear)</td>
+            <td class="col-description">@Html.DisplayFor(modelItem => item.Description)</td>
+             <td class="col-availability">
                 @if(Model != null && Model.BookAvailability != null)
                 {
                     if (Model.BookAvailability.ContainsKey(item.Id) && Model.BookAvailability[item.Id] )
@@ -133,15 +129,25 @@
                     }   
                 }
             </td>
-            <td>
-                @if (Model != null && Model.IsAdmin)
-                {
-                    <a href="@Url.Page("./Edit", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Edit</a>
-                        <a asp-page="./Delete" class="button-link" asp-route-id="@item.Id">Delete</a>
-                    <a href="@Url.Page("../StaffControls/BookHistoryCheck", new {bookID = item.Id })" class="button-link">Check Book History</a>
-                }
-                <a href="@Url.Page("./Details", new {id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear,  bookType = Model.SelectedBookTypes.ToString()})" class="button-link">Details</a>  
-            </td>
+            <td class="col-actions">
+                <div class="action-buttons">
+                    @if (Model != null && Model.IsAdmin)
+                    {
+                        <a href="@Url.Page("./Edit", new { id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString() })"
+                            class="button-link action-edit">Edit</a>
+
+                        <a asp-page="./Delete"
+                            asp-route-id="@item.Id"
+                            class="button-link action-delete">Delete</a>
+
+                        <a href="@Url.Page("../StaffControls/BookHistoryCheck", new { bookID = item.Id })"
+                            class="button-link action-history">Check Book History</a>
+                    }
+
+                    <a href="@Url.Page("./Details", new { id = item.Id, pageNumber = Model.PageNumber, title = Model.Title, author = Model.Author, genre = Model.Genre, publicationYear = Model.PublicationYear, bookType = Model.SelectedBookTypes.ToString() })"
+                        class="button-link action-details">Details</a>
+                </div>
+            </td> 
         </tr>
 }
     </tbody>

@@ -1,35 +1,105 @@
 ﻿@page
 @model DeanHLibrarySite.Pages.IndexModel
 @{
+    ViewData["Title"] = "Menu";
 }
- 
-<h1>Menu</h1>
 
-<div class="menu-container">
-    <div class="menu-options">
-        <a asp-page="./Books/Index" class="menu-option">View Books</a>
+<link rel="stylesheet" href="~/css/menu.css" />
 
-        @if (Model != null && Model.LoggedIn)
-        {
-            if (Model.IsAdmin == false)
-            {
-                <a asp-page="./Books/ViewBookings" class="menu-option">View Your Current Bookings</a>
-            }
-            else
-            {
-                <a asp-page="./StaffControls/ReturnBookingIndex" class="menu-option">View All Bookings</a>
-            }
-         
-            <form id="logoutForm" class="menu-option" asp-area="Identity" asp-page="/Account/Logout" method="post" asp-route-returnUrl="/">
-                <button type="submit">Logout</button>
-            </form>
-        } 
-        else
-        {
-            <a asp-area="Identity" asp-page="/Account/Login" class="menu-option">Login</a>
+<div class="auth-page">
+    <div class="auth-card menu-card">
+        <section class="auth-main">
+            <h1 class="auth-title">@ViewData["Title"]</h1>
+            <p class="auth-subtitle">Choose what you want to do next.</p>
 
+            <div class="menu-actions">
+                <a asp-page="./Books/Index" class="menu-action">
+                    <div class="menu-action-title">View Books</div>
+                    <div class="menu-action-sub">Browse the catalogue</div>
+                </a>
 
-            <a asp-area="Identity" asp-page="/Account/Register" class="menu-option">Register</a>
-        }
+                @if (Model != null && Model.LoggedIn)
+                {
+                    if (!Model.IsAdmin)
+                    {
+                        <a asp-page="./Books/ViewBookings" class="menu-action">
+                            <div class="menu-action-title">Your Bookings</div>
+                            <div class="menu-action-sub">View your current bookings</div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-page="./StaffControls/ReturnBookingIndex" class="menu-action">
+                            <div class="menu-action-title">All Bookings</div>
+                            <div class="menu-action-sub">Staff: manage returns & bookings</div>
+                        </a>
+                    }
+
+                    <form id="logoutForm"
+                          asp-area="Identity"
+                          asp-page="/Account/Logout"
+                          method="post"
+                          asp-route-returnUrl="/"
+                          class="menu-logout">
+                        <button type="submit" class="btn btn-primary w-100 menu-logout-btn">
+                            Logout
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-area="Identity" asp-page="/Account/Login" class="menu-action">
+                        <div class="menu-action-title">Login</div>
+                        <div class="menu-action-sub">Access your account</div>
+                    </a>
+
+                    <a asp-area="Identity" asp-page="/Account/Register" class="menu-action">
+                        <div class="menu-action-title">Register</div>
+                        <div class="menu-action-sub">Create a new account</div>
+                    </a>
+                }
+            </div>
+        </section>
+
+        <aside class="auth-side menu-side">
+            <h2 class="auth-side-title">Status</h2>
+            <p class="auth-side-subtitle">
+                @if (Model?.LoggedIn == true)
+                {
+                    <text>You’re signed in.</text>
+                }
+                else
+                {
+                    <text>You’re browsing as a guest.</text>
+                }
+            </p>
+
+            <div class="menu-side-box">
+                <div class="menu-side-row">
+                    <span class="menu-label">Logged in</span>
+                    <span class="menu-value">@((Model?.LoggedIn == true) ? "Yes" : "No")</span>
+                </div>
+
+                <div class="menu-side-row">
+                    <span class="menu-label">Role</span>
+                    <span class="menu-value">
+                        @if (Model?.LoggedIn == true)
+                        {
+                            <text>@(Model.IsAdmin ? "Admin" : "User")</text>
+                        }
+                        else
+                        {
+                            <text>Guest</text>
+                        }
+                    </span>
+                </div>
+            </div>
+
+            <div class="auth-divider"></div>
+
+            <div class="menu-side-hint">
+                Tip: admins can manage all bookings; users can view their own bookings.
+            </div>
+        </aside>
     </div>
 </div>
